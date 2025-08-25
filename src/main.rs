@@ -7,13 +7,12 @@ use std::io;
 fn main() {
     println!("KADABRA!");
     println!("Please enter your text...");
-    let mut incorrect_text = String::new();
-    // let incorrect_text = get_text();
-    // println!("{}", incorrect_text);
-    io::stdin()
-        .read_line(&mut incorrect_text)
-        .expect("Failed to read line");
-    //println!("Your incorrect text is {incorrect_text}");
+    // let mut incorrect_text = String::new();
+    let incorrect_text = get_text();
+    // io::stdin()
+    //     .read_line(&mut incorrect_text)
+    //     .expect("Failed to read line");
+    println!("Your incorrect text is {incorrect_text}");
 
     let mut result = String::with_capacity(incorrect_text.len());
 
