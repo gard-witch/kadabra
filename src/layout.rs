@@ -1,11 +1,11 @@
-mod en;
-mod ru;
+pub(crate) mod en;
+pub(crate) mod ru;
 
 use std::collections::HashMap;
 
 #[rustfmt::skip]
 #[derive(Copy, Clone, Debug, Hash, Eq, PartialEq)]
-enum Key {
+pub(crate) enum Key {
     GraveAccent, //First line, `
     Tilde, At, Hash, Dollar, Caret, Ampersand, //First line with Shift, ~ @ # $ ^ & 
     KeyQ, KeyW, KeyE, KeyR, KeyT, KeyY, KeyU, KeyI, KeyO, KeyP, LeftSquareBracket, RightSquareBracket, Backslash, // Second line ... [ ] \
@@ -17,7 +17,7 @@ enum Key {
 }
 
 #[derive(Default)]
-struct Layout {
+pub(crate) struct Layout {
     to_keys: HashMap<char, Key>,
     to_chars: HashMap<Key, char>,
 }
@@ -26,5 +26,12 @@ impl Layout {
     fn insert(&mut self, key: Key, ch: char) {
         self.to_keys.insert(ch, key);
         self.to_chars.insert(key, ch);
+    }
+
+    pub(crate) fn get_by_key(&self, key: Key) -> char {
+        *self.to_chars.get(&key).unwrap()
+    }
+    pub(crate) fn get_by_char(&self, key: char) -> Option<Key> {
+        self.to_keys.get(&key).copied()
     }
 }

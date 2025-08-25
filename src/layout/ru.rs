@@ -2,7 +2,7 @@ use std::sync::LazyLock;
 
 use super::{Key, Layout};
 
-static RU: LazyLock<Layout> = LazyLock::new(|| {
+pub(crate) static RU: LazyLock<Layout> = LazyLock::new(|| {
     let mut ru = Layout::default();
     ru.insert(Key::GraveAccent, 'ё');
     ru.insert(Key::Tilde, 'Ё');
