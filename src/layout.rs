@@ -3,6 +3,10 @@ pub(crate) mod ru;
 
 use std::collections::HashMap;
 
+use clap::ValueEnum;
+
+use crate::layout::{en::EN, ru::RU};
+
 #[rustfmt::skip]
 #[derive(Copy, Clone, Debug, Hash, Eq, PartialEq)]
 pub(crate) enum Key {
@@ -33,5 +37,20 @@ impl Layout {
     }
     pub(crate) fn get_by_char(&self, key: char) -> Option<Key> {
         self.to_keys.get(&key).copied()
+    }
+}
+
+#[derive(Copy, Clone, PartialEq, Eq, PartialOrd, Ord, ValueEnum)]
+pub(crate) enum LayoutKind {
+    En,
+    Ru,
+}
+
+impl From<LayoutKind> for &Layout {
+    fn from(value: LayoutKind) -> Self {
+        match value {
+            LayoutKind::En => &EN,
+            LayoutKind::Ru => &RU,
+        }
     }
 }
