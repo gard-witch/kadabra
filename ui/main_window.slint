@@ -1,0 +1,40 @@
+import { ListView, LineEdit, Button, ScrollView, TextEdit,StandardButton } from "std-widgets.slint";
+export component MainWindow inherits Window {
+    in-out property <string> note;
+    callback exit_requested;
+    callback copy_requested;
+    min-height: 0px;
+    min-width: 0px;
+    preferred-height: 150px;
+    preferred-width: 400px;
+    title: "Kadabra";
+    GridLayout {
+        spacing: 5px;
+
+        TextEdit {
+            read-only: true;
+            text <=> root.note;
+            col: 0;
+            row: 0;
+            colspan: 2;
+        }
+
+        Button {
+            text: "Copy";
+            col: 0;
+            row: 1;
+            clicked() => {
+                root.copy_requested();
+            }
+        }
+
+        StandardButton {
+            kind: cancel;
+            col: 1;
+            row: 1;
+            clicked() => {
+                root.exit_requested();
+            }
+        }
+    }
+}
