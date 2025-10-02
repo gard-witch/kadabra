@@ -1,44 +1,31 @@
 slint::include_modules!();
 mod layout;
 
-use clap::Parser;
 use arboard::Clipboard;
+use clap::Parser;
 
 use crate::layout::{Layout, LayoutKind};
 
-fn main() {
-    
-    //let cli = Cli::parse();
+fn main() -> Result<(), slint::PlatformError> {
+    let cli = Cli::parse();
     let user_text = selection::get_text();
-    let ui = MainWindow::new().unwrap();
+    let ui = MainWindow::new()?;
+
+    let result = convert(&user_text, cli.from.into(), cli.to.into());
+
+    ui.set_text(result.into());
+
+    ui.on_exit_requested(|| {
+        let _ = slint::quit_event_loop();
+    });
+
     let mut clipboard = Clipboard::new().unwrap();
-
-    // let result = convert(&user_text, cli.from.into(), cli.to.into());
-    let result = convert(&user_text, LayoutKind::En.into(), LayoutKind::Ru.into());
-
-    // println!("{result}");
-    ui.set_note(result.into());
-
-    ui.on_exit_requested({
-        let ui_weak = ui.as_weak();
-        move || {
-            if let Some(ui) = ui_weak.upgrade() {
-                let _ = ui.hide();
-            }
-            slint::quit_event_loop().unwrap();
-        }
+    let text = ui.get_text();
+    ui.on_copy_requested(move || {
+        let _ = clipboard.set_text(&*text);
     });
 
-    ui.on_copy_requested({
-         let current = ui.get_note();
-        move || {
-            //  println!("{current}");
-            clipboard.set_text(&*current);
-        }
-    });
-
-    ui.run().unwrap();
-
+    ui.run()
 }
 
 fn convert(user_text: &str, from: &Layout, to: &Layout) -> String {

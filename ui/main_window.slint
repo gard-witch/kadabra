@@ -1,6 +1,6 @@
 import { ListView, LineEdit, Button, ScrollView, TextEdit,StandardButton } from "std-widgets.slint";
 export component MainWindow inherits Window {
-    in-out property <string> note;
+    in-out property <string> text;
     callback exit_requested;
     callback copy_requested;
     min-height: 0px;
@@ -13,7 +13,7 @@ export component MainWindow inherits Window {
 
         TextEdit {
             read-only: true;
-            text <=> root.note;
+            text <=> root.text;
             col: 0;
             row: 0;
             colspan: 2;
