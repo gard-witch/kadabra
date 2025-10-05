@@ -1,0 +1,24 @@
+[Desktop Entry]
+Actions=RuToEn;EnToRu;
+Name=Kadabra
+GenericName=Text converter
+Comment=Converts text between keyboard layouts
+Keywords=
+Exec=kadabra
+Icon=alienarena
+Terminal=false
+StartupNotify=false
+Type=Application
+Categories=Office;
+StartupWMClass=kadabra
+X-Purism-FormFactor=Workstation;Mobile;
+
+[Desktop Action EnToRu]
+Exec=kadabra --from en --to ru
+Name=Convert from English to Russian
+X-KDE-Shortcuts=Ctrl+Alt+1
+
+[Desktop Action RuToEn]
+Exec=kadabra --from ru --to en
+Name=Convert from Russian to English
+X-KDE-Shortcuts=Ctrl+Alt+2
