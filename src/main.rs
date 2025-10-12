@@ -23,6 +23,10 @@ fn main() -> Result<(), slint::PlatformError> {
     let text = ui.get_text();
     ui.on_copy_requested(move || {
         let _ = clipboard.set_text(&*text);
+
+        let _ = slint::invoke_from_event_loop(|| {
+            slint::quit_event_loop().unwrap();
+        });
     });
 
     ui.run()
